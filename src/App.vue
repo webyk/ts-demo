@@ -8,12 +8,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,ref,computed,reactive,toRefs } from 'vue';
+import { defineComponent,ref,computed,reactive,toRefs,onMounted,onUpdated } from 'vue';
 interface dataProps{
     count:number;
     double:number;
     increase:() => void,
-    numbers:[],
+    numbers:[number],
     person:{name?:string}//代表name属性是可选属性
 }
 export default defineComponent({
@@ -27,6 +27,13 @@ export default defineComponent({
         //     count.value++
         // }
 
+        onMounted(()=>{
+            console.log("onMounted")
+        })
+        onUpdated(()=>{
+            console.log(data.count)
+        })
+
         //下面是使用reactive
         const data:dataProps = reactive({
             count:0,
@@ -36,7 +43,7 @@ export default defineComponent({
             double:computed(()=>{
                 return data.count * 2
             }),
-            numbers:[1,2],
+            numbers:[1],
             person:{}
         })
         const refData = toRefs(data)
